@@ -8,9 +8,9 @@
 import UIKit
 import Social
 import MobileCoreServices
-import Photos
 import Intents
 import Contacts
+import UniformTypeIdentifiers
 
 @available(iOS 14.0, *)
 @available(iOSApplicationExtension 14.0, *)

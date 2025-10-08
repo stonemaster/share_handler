@@ -1,6 +1,5 @@
 import Flutter
 import UIKit
-import Photos
 import Intents
 import share_handler_ios_models
 
@@ -205,28 +204,29 @@ public class SwiftShareHandlerIosPlatform: NSObject, FlutterPlugin, FlutterStrea
         if (identifier.starts(with: "file://") || identifier.starts(with: "/var/mobile/Media") || identifier.starts(with: "/private/var/mobile")) {
             return identifier.replacingOccurrences(of: "file://", with: "")
         }
-        let phAsset = PHAsset.fetchAssets(withLocalIdentifiers: [identifier], options: .none).firstObject
-        if(phAsset == nil) {
-            return nil
-        }
-        let (url, _) = getFullSizeImageURLAndOrientation(for: phAsset!)
-        return url
+        return nil
+        // let phAsset = PHAsset.fetchAssets(withLocalIdentifiers: [identifier], options: .none).firstObject
+        // if(phAsset == nil) {
+        //     return nil
+        // }
+        // let (url, _) = getFullSizeImageURLAndOrientation(for: phAsset!)
+        // return url
     }
 
-    private func getFullSizeImageURLAndOrientation(for asset: PHAsset)-> (String?, Int) {
-        var url: String? = nil
-        var orientation: Int = 0
-        let semaphore = DispatchSemaphore(value: 0)
-        let options2 = PHContentEditingInputRequestOptions()
-        options2.isNetworkAccessAllowed = true
-        asset.requestContentEditingInput(with: options2){(input, info) in
-            orientation = Int(input?.fullSizeImageOrientation ?? 0)
-            url = input?.fullSizeImageURL?.path
-            semaphore.signal()
-        }
-        semaphore.wait()
-        return (url, orientation)
-    }
+    // private func getFullSizeImageURLAndOrientation(for asset: PHAsset)-> (String?, Int) {
+    //     var url: String? = nil
+    //     var orientation: Int = 0
+    //     let semaphore = DispatchSemaphore(value: 0)
+    //     let options2 = PHContentEditingInputRequestOptions()
+    //     options2.isNetworkAccessAllowed = true
+    //     asset.requestContentEditingInput(with: options2){(input, info) in
+    //         orientation = Int(input?.fullSizeImageOrientation ?? 0)
+    //         url = input?.fullSizeImageURL?.path
+    //         semaphore.signal()
+    //     }
+    //     semaphore.wait()
+    //     return (url, orientation)
+    // }
 
     func getInitialSharedMedia(_ error: AutoreleasingUnsafeMutablePointer<FlutterError?>) -> SharedMedia? {
         let sharedMedia = initialMedia
